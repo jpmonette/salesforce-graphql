@@ -4,7 +4,7 @@
   "bugs": "https://github.com/jpmonette/salesforce-graphql/issues",
   "repository": "jpmonette/salesforce-graphql.git",
   "homepage": "http://github.com/jpmonette/salesforce-graphql",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "build/index.js",
   "license": "MIT",
   "scripts": {

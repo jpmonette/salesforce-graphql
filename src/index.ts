@@ -1,3 +1,5 @@
+import Q from './q';
+
 function getFields(info) {
   const fields = [];
   info.fieldNodes[0].selectionSet.selections.map((value, key) => {
@@ -6,28 +8,23 @@ function getFields(info) {
   return fields;
 }
 
-function getWheres(info) {
+function getWheres(info: any): any[] {
   const wheres = [];
-  info.fieldNodes[0].arguments.map((value, key) => {
-    const fieldName = value.name.value;
-    const fieldValue = value.value.value;
-    if (fieldName !== 'limit') {
-      wheres.push(`${fieldName} = '${fieldValue}'`);
+  info.fieldNodes[0].arguments.map((val, key) => {
+    const field = val.name.value;
+    const value = val.value.value;
+    if (field !== 'limit') {
+      wheres.push({ field, value, operator: '=' });
     }
   });
-
-  if (wheres.length !== 0) {
-    return ` WHERE ${wheres.join(' ')}`;
-  } else {
-    return '';
-  }
+  return wheres;
 }
 
-function getLimit(info) {
-  let limit = '';
+function getLimit(info: any): number | void {
+  let limit;
   info.fieldNodes[0].arguments.map((value, key) => {
     if (value.name.value === 'limit') {
-      limit = ' LIMIT ' + value.value.value;
+      limit = value.value.value;
     }
   });
   return limit;
@@ -40,12 +37,19 @@ export class Salesforce {
     this.conn = props.conn;
   }
 
-  query = (_, info) => {
-    const sobject = info.returnType.ofType || info.returnType;
-    const fields = getFields(info);
+  query = (parent, info) => {
+    const queryBuilder = new Q(info.returnType.ofType || info.returnType).select(getFields(info));
     const limit = getLimit(info);
+
+    if (limit) {
+      queryBuilder.limit(limit);
+    }
+
     const wheres = getWheres(info);
-    const query = `SELECT ${fields.join(',')} FROM ${sobject}${limit}${wheres}`;
+
+    wheres.map(({ field, operator, value }) => queryBuilder.where(field, operator, value));
+    Object.keys(parent).map((key: string) => queryBuilder.where(key, '=', parent[key]));
+    const query = queryBuilder.build();
     console.log('\nExecuting', query);
     return this.conn.query(query);
   };
