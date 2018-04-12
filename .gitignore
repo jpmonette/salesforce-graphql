@@ -1,0 +1,5 @@
+.env
+build
+coverage
+node_modules
+yarn.lock

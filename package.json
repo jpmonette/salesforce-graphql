@@ -1,0 +1,14 @@
+{
+  "name": "salesforce-graphql",
+  "author": "Jean-Philippe Monette <contact@jpmonette.net> (http://jpmonette.net/)",
+  "bugs": "https://github.com/jpmonette/salesforce-graphql/issues",
+  "repository": "jpmonette/salesforce-graphql.git",
+  "homepage": "http://github.com/jpmonette/salesforce-graphql",
+  "version": "0.0.1",
+  "main": "build/index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "rm -rf build && tsc",
+    "prepare": "yarn build"
+  }
+}
