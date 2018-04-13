@@ -1,9 +1,9 @@
 export default class Q {
   fromText: string;
   fieldList: string[];
-  numberOfRows: number;
+  numberOfRows: number | undefined;
   conditions: { field: string; operator: string; value: string }[];
-  numberOfRowsToSkip: number;
+  numberOfRowsToSkip: number | undefined;
 
   constructor(sobject: string) {
     this.fromText = sobject;
@@ -48,7 +48,7 @@ export default class Q {
     if (this.conditions.length !== 0) {
       return 'WHERE ' + condList.join(' AND ');
     } else {
-      return null;
+      return '';
     }
   };
 

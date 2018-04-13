@@ -1,43 +1,53 @@
 import Q from './q';
 
 function getFields(info) {
-  const fields = [];
-  info.fieldNodes[0].selectionSet.selections.map((value, key) => {
-    if (!value.selectionSet) fields.push(value.name.value);
+  const fields: string[] = [];
+  info.fieldNodes.map(fieldNode => {
+    if (fieldNode.selectionSet) {
+      fieldNode.selectionSet.selections.map(value => {
+        if (!value.selectionSet) fields.push(value.name.value);
+      });
+    }
   });
   return fields;
 }
 
-function getWheres(info: any): any[] {
-  const wheres = [];
-  info.fieldNodes[0].arguments.map((val, key) => {
-    const field = val.name.value;
-    const value = val.value.value;
-    if (field !== 'limit') {
-      wheres.push({ field, value, operator: '=' });
-    }
+function getWheres(info): any[] {
+  const wheres: { field: string; value: string; operator: string }[] = [];
+  info.fieldNodes.map(fieldNode => {
+    fieldNode.arguments.map(val => {
+      const field = val.name.value;
+      const value = val.value.value;
+      if (field !== 'limit') {
+        wheres.push({ field, value, operator: '=' });
+      }
+    });
   });
   return wheres;
 }
 
-function getLimit(info: any): number | void {
+function getLimit(info): number | void {
   let limit;
-  info.fieldNodes[0].arguments.map((value, key) => {
-    if (value.name.value === 'limit') {
-      limit = value.value.value;
-    }
+  info.fieldNodes.map(fieldNode => {
+    fieldNode.arguments.map(value => {
+      if (value.name.value === 'limit') {
+        limit = value.value.value;
+      }
+    });
   });
   return limit;
 }
 
-export class Salesforce {
-  public conn;
+class Salesforce {
+  conn: any;
 
   constructor(props) {
+    console.log('CONSTRUCTOR')
     this.conn = props.conn;
   }
 
-  query = (parent, info) => {
+  public query = (parent: { key: string }, info) => {
+    console.log('BEFORE')
     const queryBuilder = new Q(info.returnType.ofType || info.returnType).select(getFields(info));
     const limit = getLimit(info);
 
@@ -54,3 +64,5 @@ export class Salesforce {
     return this.conn.query(query);
   };
 }
+
+export { Salesforce };

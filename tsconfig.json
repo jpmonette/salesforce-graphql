@@ -3,7 +3,7 @@
     "module": "commonjs",
     "outDir": "build",
     "target": "es2016",
-    "skipLibCheck": true
+    "lib": ["esnext","dom"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "**/node_modules/*"]

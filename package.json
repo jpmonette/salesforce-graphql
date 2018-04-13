@@ -8,7 +8,17 @@
   "main": "build/index.js",
   "license": "MIT",
   "scripts": {
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
     "build": "rm -rf build && tsc",
-    "prepare": "yarn build"
+    "prepare": "yarn build",
+    "test": "jest --coverage"
+  },
+  "devDependencies": {
+    "@types/graphql": "^0.13.0",
+    "@types/jest": "^22.2.3",
+    "coveralls": "^3.0.0",
+    "jest": "^22.4.3",
+    "ts-jest": "^22.4.2",
+    "typescript": "^2.8.1"
   }
 }
