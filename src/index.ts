@@ -1,15 +1,23 @@
-import Q from './q';
+import { SOQL } from 'salesforce-queries';
 
 function getFields(info) {
-  const fields: string[] = [];
+  const fields: Set<string> = new Set([]);
   info.fieldNodes.map(fieldNode => {
     if (fieldNode.selectionSet) {
       fieldNode.selectionSet.selections.map(value => {
-        if (!value.selectionSet) fields.push(value.name.value);
+        if (!value.selectionSet) fields.add(value.name.value);
+        else {
+          if (value.name.value.indexOf('___r') !== -1) {
+            fields.add(value.name.value.replace('__r', '__c'))
+          } else {
+            fields.add(value.name.value + 'Id')
+          }
+        }
       });
     }
   });
-  return fields;
+  console.log([...fields]);
+  return [...fields];
 }
 
 function getWheres(info): any[] {
@@ -48,7 +56,7 @@ class Salesforce {
 
   public query = (parent: { key: string }, info) => {
     console.log('BEFORE')
-    const queryBuilder = new Q(info.returnType.ofType || info.returnType).select(getFields(info));
+    const queryBuilder = new SOQL(info.returnType.ofType || info.returnType).select(getFields(info));
     const limit = getLimit(info);
 
     if (limit) {
