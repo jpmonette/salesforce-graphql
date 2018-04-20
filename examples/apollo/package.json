@@ -1,0 +1,27 @@
+{
+  "name": "apollo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon -e ts -x ts-node src/index.ts"
+  },
+  "dependencies": {
+    "apollo-server-express": "^1.3.5",
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "cookie-session": "^2.0.0-beta.3",
+    "dataloader": "^1.4.0",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "graphql": "^0.13.2",
+    "graphql-tools": "^2.24.0",
+    "jsforce": "^1.8.4",
+    "passport": "^0.4.0",
+    "passport-forcedotcom": "^0.1.4"
+  },
+  "devDependencies": {
+    "@types/node": "^9.6.6"
+  }
+}
