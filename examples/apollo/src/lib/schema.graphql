@@ -1,0 +1,153 @@
+type SaveResult {
+  id: String
+}
+
+type Mutation {
+  createAccount(Name: String): SaveResult
+}
+
+type Query {
+  Account(Id: ID!): Account
+  Accounts(limit: Int!, sortField: String, sortOrder: String): [Account]
+  Contact(Id: ID!): Contact
+  Contacts(limit: Int, sortField: String, sortOrder: String): [Contact]
+}
+
+type Account {
+  Id: ID! @unique
+  IsDeleted: Boolean
+  MasterRecordId: String
+  Name: String
+  Type: String
+  RecordTypeId: String
+  ParentId: String
+  BillingStreet: String
+  BillingCity: String
+  BillingState: String
+  BillingPostalCode: String
+  BillingCountry: String
+  BillingLatitude: Int
+  BillingLongitude: Int
+  BillingGeocodeAccuracy: String
+  BillingAddress: String
+  ShippingStreet: String
+  ShippingCity: String
+  ShippingState: String
+  ShippingPostalCode: String
+  ShippingCountry: String
+  ShippingLatitude: Int
+  ShippingLongitude: Int
+  ShippingGeocodeAccuracy: String
+  ShippingAddress: String
+  Phone: String
+  Fax: String
+  AccountNumber: String
+  Website: String
+  PhotoUrl: String
+  Sic: String
+  Industry: String
+  AnnualRevenue: Int
+  NumberOfEmployees: Int
+  Ownership: String
+  TickerSymbol: String
+  Description: String
+  Rating: String
+  Site: String
+  CurrencyIsoCode: String
+  OwnerId: String
+  CreatedDate: String
+  CreatedById: String
+  LastModifiedDate: String
+  LastModifiedById: String
+  SystemModstamp: String
+  LastActivityDate: String
+  LastViewedDate: String
+  LastReferencedDate: String
+  IsPartner: Boolean
+  IsCustomerPortal: Boolean
+  Jigsaw: String
+  JigsawCompanyId: String
+  AccountSource: String
+  SicDesc: String
+  jpmonette__CustomerPriority__c: String
+  jpmonette__SLA__c: String
+  jpmonette__Active__c: String
+  jpmonette__UpsellOpportunity__c: String
+  jpmonette__SLASerialNumber__c: String
+  jpmonette__SLAExpirationDate__c: String
+  jpmonette__Test_Formula__c: String
+  jpmonette__Contact__c: String
+  jpmonette__DATETIME_TEST__c: String
+  jpmonette__EXTERNAL__c: String
+  jpmonette__Parent_Account__c: String
+  jpmonette__Total_Opp__c: Int
+
+  Contacts(limit: Int): [Contact]
+}
+
+type Contact {
+  Id: ID!
+  IsDeleted: Boolean
+  MasterRecord: Contact
+  MasterRecordId: String
+  Account: Account
+  AccountId: String
+  LastName: String
+  FirstName: String
+  Salutation: String
+  Name: String
+  OtherStreet: String
+  OtherCity: String
+  OtherState: String
+  OtherPostalCode: String
+  OtherCountry: String
+  OtherLatitude: Int
+  OtherLongitude: Int
+  OtherGeocodeAccuracy: String
+  OtherAddress: String
+  MailingStreet: String
+  MailingCity: String
+  MailingState: String
+  MailingPostalCode: String
+  MailingCountry: String
+  MailingLatitude: Int
+  MailingLongitude: Int
+  MailingGeocodeAccuracy: String
+  MailingAddress: String
+  Phone: String
+  Fax: String
+  MobilePhone: String
+  HomePhone: String
+  OtherPhone: String
+  AssistantPhone: String
+  ReportsTo: Contact
+  ReportsToId: String
+  Email: String
+  Title: String
+  Department: String
+  AssistantName: String
+  LeadSource: String
+  Birthdate: String
+  Description: String
+  CurrencyIsoCode: String
+  # Owner: User
+  OwnerId: String
+  CreatedDate: String
+  # CreatedBy: User
+  CreatedById: String
+  LastModifiedDate: String
+  # LastModifiedBy: User
+  LastModifiedById: String
+  SystemModstamp: String
+  LastActivityDate: String
+  LastCURequestDate: String
+  LastCUUpdateDate: String
+  LastViewedDate: String
+  LastReferencedDate: String
+  EmailBouncedReason: String
+  EmailBouncedDate: String
+  IsEmailBounced: Boolean
+  PhotoUrl: String
+  Jigsaw: String
+  JigsawContactId: String
+}
